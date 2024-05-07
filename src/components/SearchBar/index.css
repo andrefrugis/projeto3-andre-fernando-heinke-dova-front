@@ -1,0 +1,23 @@
+.search-bar form {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input, .search-bar button {
+  margin: 5px;
+  padding: 7px;
+  font-size: 16px;
+  font-family: 'sans-serif';
+  background-color: rgb(242, 225, 131);
+  border-width: 1px;
+  font-size: 1.3rem;
+  color: rgb(143, 128, 45);
+}
+
+.result {
+  text-align: center;
+  color: green;
+  font-size: 18px;
+  margin-top: 20px;
+}
