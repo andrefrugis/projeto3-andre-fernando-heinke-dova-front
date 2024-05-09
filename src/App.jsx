@@ -4,13 +4,19 @@ import AppBar from "./components/Appbar";
 import SearchBar from "./components/SearchBar";
 import Login from "./components/Login";
 import "./App.css";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [cryptos, setCryptos] = useState([]);
   const [filteredCryptos, setFilteredCryptos] = useState([]);
   const [favorites, setFavorites] = useState(new Set()); // Usando um Set para manter os favoritos
-  const [pagFavorites, setPagFavorites] = useState(false)
-  const [pagLogado, setPagLogado] = useState(true) // botap boleano para mostrar os favoritos
+  const [pagFavorites, setPagFavorites] = useState(false);
+  const navigate = useNavigate();
+  const config = {
+    headers: {
+      Authorization: `token ${localStorage.getItem("token")}`,
+    },
+  };
 
   const carregaCriptomoedas = () => {
     axios.get("http://127.0.0.1:8000/api/moedas/")
@@ -23,7 +29,7 @@ function App() {
 
   const carregaFavoritos = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/favoritar/");
+      const response = await axios.get("http://127.0.0.1:8000/api/favoritar/", config);
       console.log("Favoritos carregados:", response.data);
       setFavorites(new Set(response.data));  // Cria um Set com os símbolos válidos
     } catch (error) {
@@ -33,10 +39,15 @@ function App() {
 
   useEffect(() => {
     // Carrega as criptomoedas e os favoritos iniciais
-    carregaCriptomoedas();
-    const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    setFavorites(new Set(savedFavorites));
-    console.log("Favoritos carregados do localStorage:", favorites);
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+    }
+    else{
+      carregaCriptomoedas();
+      const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      setFavorites(new Set(savedFavorites));
+      console.log("Favoritos carregados do localStorage:", favorites);
+    }
   }, []);
 
   const toggleBoolean = () => {
@@ -77,15 +88,7 @@ function App() {
       })
   };
 
-  if (pagLogado) {
-    return (
-      <>
-        <AppBar/>
-        <Login />
-      </>
-    );
-  };
-  if (pagFavorites === true && pagLogado === false) {
+  if (pagFavorites) {
     return (
       <>
         <AppBar />
@@ -117,7 +120,7 @@ function App() {
       </>
     );
   }
-  if (pagFavorites === false && pagLogado === false) {
+  else {
     return (
       <>
         <AppBar />

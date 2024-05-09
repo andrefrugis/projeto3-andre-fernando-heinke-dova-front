@@ -7,6 +7,7 @@ import {
 import App from './App.jsx'
 import Editar, { loader as noteLoader} from './components/Editar'
 import './index.css'
+import Login from './components/Login'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
     path: "edit/:noteId",
     element: <Editar />,
     loader: noteLoader,
+  },
+  {
+    path: "login",
+    element: <Login />,
   },
 ]);
 

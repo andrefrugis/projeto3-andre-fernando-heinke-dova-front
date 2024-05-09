@@ -1,9 +1,10 @@
 // src/components/Login/index.jsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Login({ onLoginSuccess }) {
@@ -11,19 +12,20 @@ function Login({ onLoginSuccess }) {
   const [password, setPassword] = useState('');
   const [isSigningUp, setIsSigningUp] = useState(true); // Para alternar entre login e cadastro
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    const data = {
+        username: username,
+        password: password,
+    }
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login/', {
-        username,
-        password
+      await axios.post('http://127.0.0.1:8000/api/token/', data).then(response => {
+        const token = response.data.token;
+        localStorage.setItem('token', token);
       });
-      if (response.data.success) {
-        onLoginSuccess(response.data.user);
-      } else {
-        setError('Falha no login. Por favor, tente novamente.');
-      }
     } catch (e) {
       setError('Erro ao conectar ao servidor.');
     }
@@ -31,17 +33,14 @@ function Login({ onLoginSuccess }) {
 
   const handleSignUp = async (event) => {
     event.preventDefault();
+    const data = {
+        username: username,
+        password: password,
+    }
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/signup/', {
-        username,
-        password
-      });
-      if (response.data.success) {
-        setError('Cadastro realizado com sucesso. Por favor, faça login.');
-        setIsSigningUp(false); // Troca de volta para o login após o registro bem-sucedido
-      } else {
-        setError('Falha no cadastro. Por favor, tente novamente.');
-      }
+      await axios.post('http://127.0.0.1:8000/api/users/', data);
+      setIsSigningUp(false); // Troca de volta para o login após o registro bem-sucedido
+      navigate('/')
     } catch (e) {
       setError('Erro ao conectar ao servidor.');
     }
