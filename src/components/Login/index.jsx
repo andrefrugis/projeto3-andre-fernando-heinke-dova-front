@@ -4,6 +4,7 @@ import axios from 'axios';
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import AppBar from '../Appbar';
 
 
 
@@ -13,19 +14,24 @@ function Login({ onLoginSuccess }) {
   const [isSigningUp, setIsSigningUp] = useState(true); // Para alternar entre login e cadastro
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
 
 
   const handleLogin = async (event) => {
     event.preventDefault();
     const data = {
         username: username,
+        email: email,
         password: password,
     }
     try {
       await axios.post('http://127.0.0.1:8000/api/token/', data).then(response => {
         const token = response.data.token;
+        console.log('isSigningUp:', isSigningUp);
         localStorage.setItem('token', token);
+        console.log(token)
       });
+      navigate('/');
     } catch (e) {
       setError('Erro ao conectar ao servidor.');
     }
@@ -35,12 +41,12 @@ function Login({ onLoginSuccess }) {
     event.preventDefault();
     const data = {
         username: username,
+        email: email,
         password: password,
     }
     try {
       await axios.post('http://127.0.0.1:8000/api/users/', data);
-      setIsSigningUp(false); // Troca de volta para o login após o registro bem-sucedido
-      navigate('/')
+      setIsSigningUp(false);
     } catch (e) {
       setError('Erro ao conectar ao servidor.');
     }
@@ -62,6 +68,18 @@ function Login({ onLoginSuccess }) {
             onChange={(e) => setUsername(e.target.value)}
           />
           <div id="userHelp" class="form-text">We'll never share your information with anyone else.</div>
+        </div>
+        <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+            <input 
+            type="email" 
+            className="form-control" 
+            id="exampleInputEmail1" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            aria-describedby="emailHelp"
+            />
+            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
         </div>
         <div className="mb-3">
           <label for="exampleInputPassword1" className="form-label">Password</label>

@@ -39,7 +39,7 @@ function App() {
 
   useEffect(() => {
     // Carrega as criptomoedas e os favoritos iniciais
-    if (localStorage.getItem("token") === null) {
+    if (localStorage.getItem("token" === null)) {
       navigate("/login");
     }
     else{
@@ -71,7 +71,7 @@ function App() {
   };
 
   const toggleFavorite = (symbol) => {
-    axios.post('http://127.0.0.1:8000/api/favoritar/', { symbol })
+    axios.post('http://127.0.0.1:8000/api/favoritar/', { symbol }, config)
       .then(res => {
         // Atualiza o estado local com base na resposta do servidor
         const newFavorites = new Set(favorites);
