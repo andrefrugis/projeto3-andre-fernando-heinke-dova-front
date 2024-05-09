@@ -2,13 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import AppBar from "./components/Appbar";
 import SearchBar from "./components/SearchBar";
+import Login from "./components/Login";
 import "./App.css";
 
 function App() {
   const [cryptos, setCryptos] = useState([]);
   const [filteredCryptos, setFilteredCryptos] = useState([]);
   const [favorites, setFavorites] = useState(new Set()); // Usando um Set para manter os favoritos
-  const [pagFavorites, setPagFavorites] = useState(false) // botap boleano para mostrar os favoritos
+  const [pagFavorites, setPagFavorites] = useState(false)
+  const [pagLogado, setPagLogado] = useState(true) // botap boleano para mostrar os favoritos
 
   const carregaCriptomoedas = () => {
     axios.get("http://127.0.0.1:8000/api/moedas/")
@@ -74,8 +76,16 @@ function App() {
         localStorage.setItem('favorites', JSON.stringify(Array.from(newFavorites)));
       })
   };
-  
-  if (pagFavorites) {
+
+  if (pagLogado) {
+    return (
+      <>
+        <AppBar/>
+        <Login />
+      </>
+    );
+  };
+  if (pagFavorites === true && pagLogado === false) {
     return (
       <>
         <AppBar />
@@ -107,7 +117,7 @@ function App() {
       </>
     );
   }
-  else {
+  if (pagFavorites === false && pagLogado === false) {
     return (
       <>
         <AppBar />
