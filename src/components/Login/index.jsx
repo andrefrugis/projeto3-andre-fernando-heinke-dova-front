@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import "./index.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function Login({ onLoginSuccess }) {
@@ -51,20 +52,24 @@ function Login({ onLoginSuccess }) {
       <form onSubmit={isSigningUp ? handleSignUp : handleLogin}>
         <h2>{isSigningUp ? 'Cadastrar' : 'Login'}</h2>
         {error && <p className="error">{error}</p>}
-        <div className="input-group">
-          <label htmlFor="username">Usuário</label>
+        <div className="mb-3">
+          <label for="username" className="form-label">Usuário</label>
           <input
             id="username"
             type="text"
             value={username}
+            className="form-control"
+            aria-describedby="userHelp"
             onChange={(e) => setUsername(e.target.value)}
           />
+          <div id="userHelp" class="form-text">We'll never share your information with anyone else.</div>
         </div>
-        <div className="input-group">
-          <label htmlFor="password">Senha</label>
+        <div className="mb-3">
+          <label for="exampleInputPassword1" className="form-label">Password</label>
           <input
             id="password"
             type="password"
+            className="form-control"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
