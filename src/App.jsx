@@ -39,12 +39,13 @@ function App() {
 
   useEffect(() => {
     // Carrega as criptomoedas e os favoritos iniciais
-    if (localStorage.getItem("token" === null)) {
+    const token = localStorage.getItem("token");
+    if (token === null) {
       navigate("/login");
     }
     else{
       carregaCriptomoedas();
-      const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      const savedFavorites = JSON.parse(localStorage.getItem(`favorites-${token}`)) || [];
       setFavorites(new Set(savedFavorites));
       console.log("Favoritos carregados do localStorage:", favorites);
     }
@@ -56,10 +57,16 @@ function App() {
   };
 
   const voltar_inicio = () => {
+    const token = localStorage.getItem("token");
     setPagFavorites(!pagFavorites);
-    const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const savedFavorites = JSON.parse(localStorage.getItem(`favorites-${token}`)) || [];
     setFavorites(new Set(savedFavorites));
-  };  
+  };
+  
+  const logout = () => {
+    navigate("/login");
+
+  };
 
   const handleSearch = async (searchTerm) => {
     if (searchTerm) {
@@ -71,6 +78,7 @@ function App() {
   };
 
   const toggleFavorite = (symbol) => {
+    const token = localStorage.getItem("token");
     axios.post('http://127.0.0.1:8000/api/favoritar/', { symbol }, config)
       .then(res => {
         // Atualiza o estado local com base na resposta do servidor
@@ -84,7 +92,7 @@ function App() {
           newFavorites.add(symbol);
         }
         setFavorites(newFavorites);
-        localStorage.setItem('favorites', JSON.stringify(Array.from(newFavorites)));
+        localStorage.setItem(`favorites-${token}`, JSON.stringify(Array.from(newFavorites)));
       })
   };
 
@@ -124,6 +132,12 @@ function App() {
     return (
       <>
         <AppBar />
+        <button
+          className="logout"
+          onClick={() => logout()}
+        >
+          Logout
+        </button>
         <main className="container">
           <SearchBar onSearch={handleSearch} />
           <button  

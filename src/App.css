@@ -72,3 +72,14 @@ color: darkorange;
     font-size: 1.3rem;
     margin-bottom: 1.5rem;
 }
+
+.logout{
+  position: absolute;
+  right:0px;
+  margin: 10px;
+  color: rgb(143, 128, 45);
+  background-color: rgb(242, 225, 131);
+  border-width: 1px;
+  font-family: 'sans-serif';
+  font-size: 1.3rem;
+}

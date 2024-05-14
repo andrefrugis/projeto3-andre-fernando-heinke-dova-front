@@ -53,6 +53,8 @@ function Login({ onLoginSuccess }) {
   };
 
   return (
+    <>
+    <AppBar />
     <div className="login-container">
       <form onSubmit={isSigningUp ? handleSignUp : handleLogin}>
         <h2>{isSigningUp ? 'Cadastrar' : 'Login'}</h2>
@@ -99,6 +101,7 @@ function Login({ onLoginSuccess }) {
         </button>
       </form>
     </div>
+    </>
   );
 }
 
