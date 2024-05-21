@@ -69,20 +69,18 @@ function Login({ onLoginSuccess }) {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-    {isSigningUp && (
-      <div className="mb-3">
-        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-        <input 
-        type="email" 
-        className="form-control" 
-        id="exampleInputEmail1" 
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        aria-describedby="emailHelp"
-        />
-        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-      </div>
-    )}
+        <div className="mb-3">
+          <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+          <input 
+          type="email" 
+          className="form-control" 
+          id="exampleInputEmail1" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          aria-describedby="emailHelp"
+          />
+          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+        </div>
         <div className="mb-3">
           <label for="exampleInputPassword1" className="form-label">Password</label>
           <input
