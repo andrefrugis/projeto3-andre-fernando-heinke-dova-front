@@ -6,7 +6,7 @@ import "./index.css";
 export default function Note({ id, title, content, onNoteDeleted }) {
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/notes/${id}/`);
+      const response = await axios.delete(`http://projeto-3-andre-fernando-heinke-dova.onrender.com/api/notes/${id}/`);
       if (response.status === 204) {
         onNoteDeleted(id);
       }

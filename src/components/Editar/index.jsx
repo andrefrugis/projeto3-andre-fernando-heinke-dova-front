@@ -5,7 +5,7 @@ import AppBar from "../Appbar";
 
 export async function loader({ params }) {
     const note = await axios
-                        .get(`http://localhost:8000/api/notes/${params.noteId}/`)
+                        .get(`http://projeto-3-andre-fernando-heinke-dova.onrender.com/api/notes/${params.noteId}/`)
                         .then((response) => response.data);
     return { note };
 }
@@ -22,7 +22,7 @@ export default function Editar() {
     const salvarNota = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:8000/api/notes/${note.id}`, {
+            const response = await axios.post(`http://projeto-3-andre-fernando-heinke-dova.onrender.com/api/notes/${note.id}`, {
                 title, content
             });
             if (response.status === 200) {

@@ -25,7 +25,7 @@ function Login({ onLoginSuccess }) {
         password: password,
     }
     try {
-      await axios.post('http://127.0.0.1:8000/api/token/', data).then(response => {
+      await axios.post('http://projeto-3-andre-fernando-heinke-dova.onrender.com/api/token/', data).then(response => {
         const token = response.data.token;
         console.log('isSigningUp:', isSigningUp);
         localStorage.setItem('token', token);
@@ -45,7 +45,7 @@ function Login({ onLoginSuccess }) {
         password: password,
     }
     try {
-      await axios.post('http://127.0.0.1:8000/api/users/', data);
+      await axios.post('http://projeto-3-andre-fernando-heinke-dova.onrender.com/api/users/', data);
       setIsSigningUp(false);
     } catch (e) {
       setError('Erro ao conectar ao servidor.');

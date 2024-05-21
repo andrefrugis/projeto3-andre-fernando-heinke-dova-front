@@ -19,7 +19,7 @@ function App() {
   };
 
   const carregaCriptomoedas = () => {
-    axios.get("http://127.0.0.1:8000/api/moedas/")
+    axios.get("http://projeto-3-andre-fernando-heinke-dova.onrender.com/api/moedas/")
          .then(res => {
            setCryptos(res.data);
            setFilteredCryptos(res.data);  // Inicializa com todos os dados
@@ -29,7 +29,7 @@ function App() {
 
   const carregaFavoritos = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/favoritar/", config);
+      const response = await axios.get("http://projeto-3-andre-fernando-heinke-dova.onrender.com/api/favoritar/", config);
       console.log("Favoritos carregados:", response.data);
       setFavorites(new Set(response.data));  // Cria um Set com os símbolos válidos
     } catch (error) {
@@ -79,7 +79,7 @@ function App() {
 
   const toggleFavorite = (symbol) => {
     const token = localStorage.getItem("token");
-    axios.post('http://127.0.0.1:8000/api/favoritar/', { symbol }, config)
+    axios.post('http://projeto-3-andre-fernando-heinke-dova.onrender.com/api/favoritar/', { symbol }, config)
       .then(res => {
         // Atualiza o estado local com base na resposta do servidor
         const newFavorites = new Set(favorites);
